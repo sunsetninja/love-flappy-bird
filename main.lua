@@ -49,6 +49,8 @@ function love.update(dt)
   backgroundScroll = (backgroundScroll + (backgroundScrollSpeed * dt)) % backgroundLoopingPoint
 
   groundScroll = (groundScroll + (groundScrollSpeed * dt)) % gameWidth
+
+  bird:update(dt)
 end
 
 function love.keypressed(key)
