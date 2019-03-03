@@ -1,4 +1,9 @@
-local push = require("libs/push")
+-- libs
+push = require("libs/push")
+Class = require('libs/class')
+
+-- units
+require('units/Bird')
 
 gameWidth = 512
 gameHeight = 288
@@ -14,6 +19,8 @@ local backgroundLoopingPoint = 413
 local ground = love.graphics.newImage('assets/images/ground.png')
 local groundScroll = 0
 local groundScrollSpeed = 60
+
+local bird = Bird()
 
 -- 
 function love.load()
@@ -55,6 +62,8 @@ function love.draw()
 
   love.graphics.draw(background, -backgroundScroll, 0)
   love.graphics.draw(ground, -groundScroll, gameHeight - 16)
+
+  bird:render()
 
   push:finish()
 end
