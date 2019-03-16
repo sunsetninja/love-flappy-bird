@@ -7,7 +7,7 @@ function Pipe:init()
   self.width = pipeImage:getWidth()
 
   self.x = gameWidth
-  self.y = math.random(gameHeight / 4, gameHeight - 10)
+  self.y = math.random(gameHeight / 4, gameHeight - 80)
 end
 
 function Pipe:update(dt)
