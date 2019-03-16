@@ -57,7 +57,7 @@ function love.update(dt)
   if dt < 1/60 then
     love.timer.sleep(1/60 - dt)
   end
-  
+
   backgroundScroll = (backgroundScroll + (backgroundScrollSpeed * dt)) % backgroundLoopingPoint
 
   groundScroll = (groundScroll + (groundScrollSpeed * dt)) % gameWidth
@@ -105,11 +105,12 @@ function love.draw()
   push:start()
 
   love.graphics.draw(background, -backgroundScroll, 0)
-  love.graphics.draw(ground, -groundScroll, gameHeight - 16)
 
   for k, pipe in pairs(pipes) do
     pipe:render()
   end
+  
+  love.graphics.draw(ground, -groundScroll, gameHeight - 16)
 
   bird:render()
 
