@@ -19,7 +19,7 @@ function Bird:update(dt)
 
   -- Bird jump
   if love.keyboard.wasPressed('space') then
-    self.dy = -jumpVelocity * dt
+    self.dy = -5
   end
 
   self.y = self.y + self.dy
