@@ -4,7 +4,7 @@ Class = require('libs/class')
 
 -- units
 require('units/Bird')
-require('units/Pipe')
+require('units/PipePair')
 
 gameWidth = 512
 gameHeight = 288
@@ -22,9 +22,9 @@ local groundScroll = 0
 local groundScrollSpeed = 60
 
 local bird = Bird()
--- local pipe = Pipe()
-local pipes = {}
-local pipeSpawnTimer = 2
+local pipePairs = {}
+local pipePairSpawnTimer = 2
+local lastPipeY = -pipeHeight + math.random(80) + 20
 
 -- 
 function love.load()
@@ -62,23 +62,32 @@ function love.update(dt)
 
   groundScroll = (groundScroll + (groundScrollSpeed * dt)) % gameWidth
 
-  pipeSpawnTimer = pipeSpawnTimer + dt
+  pipePairSpawnTimer = pipePairSpawnTimer + dt
 
-  if (pipeSpawnTimer > 2) then
-    table.insert(pipes, Pipe())
-    print('added new pipe!')
+  if (pipePairSpawnTimer > 2) then
+    local y = math.max(
+      -pipeHeight + 10, 
+      math.min(
+        lastPipeY + math.random(-20, 20),
+        gameHeight - 90 - pipeHeight)
+      )
+    
+    lastPipeY = y
 
-    pipeSpawnTimer = 0
+    table.insert(pipePairs, PipePair(y))
+    print('added new pipes!')
+
+    pipePairSpawnTimer = 0
   end
 
   bird:update(dt)
 
-  for k, pipe in pairs(pipes) do
-    pipe:update(dt)
+  for k, pipePair in pairs(pipePairs) do
+    pipePair:update(dt)
 
-    if pipe.x < -pipe.width then
-      print('removed old pipe!')
-      table.remove(pipes, k)
+    if pipePair.remove then
+      table.remove(pipePairs, k)
+      print('removed old pipes!')
     end
   end
 
@@ -106,8 +115,8 @@ function love.draw()
 
   love.graphics.draw(background, -backgroundScroll, 0)
 
-  for k, pipe in pairs(pipes) do
-    pipe:render()
+  for _, pipePair in pairs(pipePairs) do
+    pipePair:render()
   end
   
   love.graphics.draw(ground, -groundScroll, gameHeight - 16)
