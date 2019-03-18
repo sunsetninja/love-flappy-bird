@@ -12,6 +12,8 @@ function PipePair:init(y)
     ['upper'] = Pipe('top', self.y),
     ['lower'] = Pipe('bottom', self.y + pipeHeight + pipePairGapHeight)
   }
+
+  self.remove = false
 end
 
 function PipePair:update(dt)

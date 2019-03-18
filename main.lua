@@ -24,7 +24,7 @@ local groundScrollSpeed = 60
 local bird = Bird()
 local pipePairs = {}
 local pipePairSpawnTimer = 2
-local lastPipeY = -pipeHeight + math.random(80) + 20
+local lastPipesY = -pipeHeight + math.random(80) + 20
 
 -- 
 function love.load()
@@ -68,11 +68,11 @@ function love.update(dt)
     local y = math.max(
       -pipeHeight + 10, 
       math.min(
-        lastPipeY + math.random(-20, 20),
+        lastPipesY + math.random(-20, 20),
         gameHeight - 90 - pipeHeight)
       )
     
-    lastPipeY = y
+    lastPipesY = y
 
     table.insert(pipePairs, PipePair(y))
     print('added new pipes!')
