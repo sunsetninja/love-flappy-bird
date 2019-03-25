@@ -26,6 +26,9 @@ local pipePairs = {}
 local pipePairSpawnTimer = 2
 local lastPipesY = -pipeHeight + math.random(80) + 20
 
+local isScrolling = false
+local isGameOver = false
+
 -- 
 function love.load()
   love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -58,36 +61,46 @@ function love.update(dt)
     love.timer.sleep(1/60 - dt)
   end
 
-  backgroundScroll = (backgroundScroll + (backgroundScrollSpeed * dt)) % backgroundLoopingPoint
+  if (isScrolling) then
+    backgroundScroll = (backgroundScroll + (backgroundScrollSpeed * dt)) % backgroundLoopingPoint
 
-  groundScroll = (groundScroll + (groundScrollSpeed * dt)) % gameWidth
+    groundScroll = (groundScroll + (groundScrollSpeed * dt)) % gameWidth
 
-  pipePairSpawnTimer = pipePairSpawnTimer + dt
+    pipePairSpawnTimer = pipePairSpawnTimer + dt
 
-  if (pipePairSpawnTimer > 2) then
-    local y = math.max(
-      -pipeHeight + 10, 
-      math.min(
-        lastPipesY + math.random(-40, 40),
-        gameHeight - (pipePairGapHeight - 10) - pipeHeight)
-      )
-    
-    lastPipesY = y
+    if (pipePairSpawnTimer > 2) then
+      local y = math.max(
+        -pipeHeight + 10, 
+        math.min(
+          lastPipesY + math.random(-40, 40),
+          gameHeight - (pipePairGapHeight - 10) - pipeHeight)
+        )
+      
+      lastPipesY = y
 
-    table.insert(pipePairs, PipePair(y))
-    print('added new pipes!')
+      table.insert(pipePairs, PipePair(y))
+      print('added new pipes!')
 
-    pipePairSpawnTimer = 0
-  end
+      pipePairSpawnTimer = 0
+    end
 
-  bird:update(dt)
+    bird:update(dt)
 
-  for k, pipePair in pairs(pipePairs) do
-    pipePair:update(dt)
+    for k, pipePair in pairs(pipePairs) do
+      pipePair:update(dt)
 
-    if pipePair.remove then
-      table.remove(pipePairs, k)
-      print('removed old pipes!')
+      for l, pipe in pairs(pipePair.pipes) do
+        if bird:collides(pipe) then
+          isScrolling = false
+          isGameOver = true
+          print('bird collides with a pipe!')
+        end
+      end
+
+      if pipePair.remove then
+        table.remove(pipePairs, k)
+        print('removed old pipes!')
+      end
     end
   end
 
@@ -99,6 +112,17 @@ function love.keypressed(key)
 
   if key == 'escape' then
     love.event.quit()
+    return
+  end
+
+  if (key == 'space' and not isScrolling and not isGameOver) then
+    isScrolling = true
+    return
+  end
+  
+  if key == 'p' then
+    isScrolling = not isScrolling
+    return
   end
 end
 
