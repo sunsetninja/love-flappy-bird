@@ -37,6 +37,12 @@ function love.load()
 
   math.randomseed(os.time())
 
+  smallFont = love.graphics.newFont('assets/fonts/font.ttf', 8)
+  mediumFont = love.graphics.newFont('assets/fonts/flappy.ttf', 14)
+  flappyFont = love.graphics.newFont('assets/fonts/flappy.ttf', 28)
+  hugeFont = love.graphics.newFont('assets/fonts/flappy.ttf', 56)
+  love.graphics.setFont(flappyFont)
+
   push:setupScreen(
     gameWidth,
     gameHeight,
