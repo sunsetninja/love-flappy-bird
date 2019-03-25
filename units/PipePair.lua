@@ -2,7 +2,7 @@ require("units/Pipe")
 
 PipePair = Class{}
 
-local pipePairGapHeight = 90
+pipePairGapHeight = 105
 
 function PipePair:init(y)
   self.x = gameWidth + 32

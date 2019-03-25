@@ -68,8 +68,8 @@ function love.update(dt)
     local y = math.max(
       -pipeHeight + 10, 
       math.min(
-        lastPipesY + math.random(-20, 20),
-        gameHeight - 90 - pipeHeight)
+        lastPipesY + math.random(-40, 40),
+        gameHeight - (pipePairGapHeight - 10) - pipeHeight)
       )
     
     lastPipesY = y
