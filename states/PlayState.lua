@@ -1,11 +1,14 @@
 PlayState = Class{__includes = BaseState}
 
+local highScore = 0
 
 function PlayState:init()
+  self.score = 0
   self.bird = Bird()
   self.pipePairs = {}
   self.pipePairSpawnTimer = 2
   self.lastPipesY = -pipeHeight + math.random(80) + 20
+  print('init')
 end
 
 function PlayState:update(dt)
@@ -22,7 +25,6 @@ function PlayState:update(dt)
     self.lastPipesY = y
 
     table.insert(self.pipePairs, PipePair(y))
-    print('added new pipes!')
 
     self.pipePairSpawnTimer = 0
   end
@@ -34,19 +36,34 @@ function PlayState:update(dt)
 
     for l, pipe in pairs(pipePair.pipes) do
       if self.bird:collides(pipe) then
-        print('bird collides with a pipe!')
-        gStateMachine:change('title')
+        gStateMachine:change('score', {
+          score = self.score,
+          highScore = highScore
+        })
       end
     end
 
     if pipePair.remove then
       table.remove(self.pipePairs, k)
-      print('removed old pipes!')
+    end
+
+    if (self.bird.x >= pipePair.x and not pipePair.scored) then
+      self.score = self.score + 1
+      pipePair.scored = true
+
+      if (highScore < self.score) then
+        highScore = self.score
+      end
+
+      print('score', self.score)
     end
   end
 
   if self.bird.y > gameHeight - 15 then
-    gStateMachine:change('title')
+    gStateMachine:change('score', {
+      score = self.score,
+      highScore = highScore
+    })
   end
 end
 

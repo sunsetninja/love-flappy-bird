@@ -11,8 +11,6 @@ function Bird:init()
   self.x = (gameWidth / 2) - (self.width / 2)
   self.y = (gameHeight / 2) - (self.height / 2)
 
-  print(self.height)
-
   self.dy = 0
 end
 
