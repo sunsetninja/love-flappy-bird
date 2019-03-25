@@ -47,7 +47,7 @@ function PlayState:update(dt)
       table.remove(self.pipePairs, k)
     end
 
-    if (self.bird.x >= pipePair.x and not pipePair.scored) then
+    if (self.bird.x >= pipePair.x + pipeWidth and not pipePair.scored) then
       self.score = self.score + 1
       pipePair.scored = true
 
