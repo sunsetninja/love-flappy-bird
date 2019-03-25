@@ -8,13 +8,15 @@ function PlayState:init()
   self.pipePairs = {}
   self.pipePairSpawnTimer = 2
   self.lastPipesY = -pipeHeight + math.random(80) + 20
-  print('init')
+  
+  self.pipePairInterval = math.random(1.7, 2.2)
+  pipePairGapHeight = math.random(85, 100)
 end
 
 function PlayState:update(dt)
   self.pipePairSpawnTimer = self.pipePairSpawnTimer + dt
 
-  if (self.pipePairSpawnTimer > 2) then
+  if (self.pipePairSpawnTimer > self.pipePairInterval) then
     local y = math.max(
       -pipeHeight + 10, 
       math.min(
@@ -27,6 +29,7 @@ function PlayState:update(dt)
     table.insert(self.pipePairs, PipePair(y))
 
     self.pipePairSpawnTimer = 0
+    self.pipePairInterval = math.random(1.7, 2.2)
   end
 
   self.bird:update(dt)
