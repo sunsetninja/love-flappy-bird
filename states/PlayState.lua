@@ -71,6 +71,9 @@ function PlayState:render()
   for _, pipePair in pairs(self.pipePairs) do
     pipePair:render()
   end
+
+  love.graphics.setFont(flappyFont)
+  love.graphics.print('Score: ' .. tostring(self.score), 8, 8)
   
   self.bird:render()
 end
