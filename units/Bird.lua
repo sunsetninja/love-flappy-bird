@@ -19,10 +19,15 @@ function Bird:update(dt)
 
   -- Bird jump
   if love.keyboard.wasPressed('space') then
-    self.dy = -5
+    self.dy = -4
   end
 
-  self.y = self.y + self.dy
+  local newY = math.max(
+    -self.height,
+    math.min(self.y + self.dy, gameHeight + self.height)
+  )
+
+  self.y = newY
 end
 
 function Bird:render()
