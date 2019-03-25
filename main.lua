@@ -43,6 +43,17 @@ function love.load()
   hugeFont = love.graphics.newFont('assets/fonts/flappy.ttf', 56)
   love.graphics.setFont(flappyFont)
 
+  sounds = {
+    ['jump'] = love.audio.newSource('assets/sounds/effects/jump.wav', 'static'),
+    ['explosion'] = love.audio.newSource('assets/sounds/effects/explosion.wav', 'static'),
+    ['hurt'] = love.audio.newSource('assets/sounds/effects/hurt.wav', 'static'),
+    ['score'] = love.audio.newSource('assets/sounds/effects/score.wav', 'static'),
+    ['music'] = love.audio.newSource('assets/sounds/music/marios_way.mp3', 'static')
+  }
+
+  sounds['music']:setLooping(true)
+  sounds['music']:play()
+
   push:setupScreen(
     gameWidth,
     gameHeight,

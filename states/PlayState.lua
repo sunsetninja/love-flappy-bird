@@ -36,6 +36,9 @@ function PlayState:update(dt)
 
     for l, pipe in pairs(pipePair.pipes) do
       if self.bird:collides(pipe) then
+        sounds['explosion']:play()
+        sounds['hurt']:play()
+        
         gStateMachine:change('score', {
           score = self.score,
           highScore = highScore
@@ -55,11 +58,16 @@ function PlayState:update(dt)
         highScore = self.score
       end
 
+      sounds['score']:play()
+
       print('score', self.score)
     end
   end
 
   if self.bird.y > gameHeight - 15 then
+    sounds['explosion']:play()    
+    sounds['hurt']:play()
+    
     gStateMachine:change('score', {
       score = self.score,
       highScore = highScore
