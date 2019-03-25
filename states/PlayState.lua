@@ -18,15 +18,17 @@ function PlayState:update(dt)
 
   if (self.pipePairSpawnTimer > self.pipePairInterval) then
     local y = math.max(
-      -pipeHeight + 10, 
+      -pipeHeight + 40, 
       math.min(
         self.lastPipesY + math.random(-40, 40),
-        gameHeight - (pipePairGapHeight - 10) - pipeHeight)
+        gameHeight - (pipePairGapHeight + 40) - pipeHeight)
       )
     
     self.lastPipesY = y
 
-    table.insert(self.pipePairs, PipePair(y))
+    local isPipePairMoving = math.random() < 0.3
+
+    table.insert(self.pipePairs, PipePair(y, isPipePairMoving))
 
     self.pipePairSpawnTimer = 0
     self.pipePairInterval = math.random(1.7, 2.2)

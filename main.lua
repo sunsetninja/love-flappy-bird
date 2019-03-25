@@ -52,7 +52,7 @@ function love.load()
   }
 
   sounds['music']:setLooping(true)
-  sounds['music']:play()
+  -- sounds['music']:play()
 
   push:setupScreen(
     gameWidth,
