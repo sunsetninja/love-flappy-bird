@@ -15,8 +15,8 @@ function Bird:init()
 end
 
 function Bird:collides(pipe)
-  if (self.x + 2) + (self.width - 4) >= pipe.x and self.x + 2 <= pipe.x + pipeWidth then
-    if (self.y + 2) + (self.height - 4) >= pipe.y and self.y + 2 <= pipe.y + pipeHeight then
+  if (self.x + 5) + (self.width - 10) >= pipe.x and self.x + 5 <= pipe.x + pipeWidth then
+    if (self.y + 5) + (self.height - 10) >= pipe.y and self.y + 5 <= pipe.y + pipeHeight then
       return true
     end
   end
@@ -30,7 +30,7 @@ function Bird:update(dt)
   -- Bird jump
   if love.keyboard.wasPressed('space') then
     sounds['jump']:play()
-    self.dy = -4
+    self.dy = -3
   end
 
   local newY = math.max(

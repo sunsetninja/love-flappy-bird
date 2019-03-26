@@ -9,7 +9,7 @@ function PlayState:init()
   self.pipePairSpawnTimer = 2
   self.lastPipesY = -pipeHeight + math.random(80) + 20
   
-  self.pipePairInterval = math.random(1.7, 2.2)
+  self.pipePairInterval = math.random(2, 2.2)
   pipePairGapHeight = math.random(85, 100)
 end
 
@@ -31,7 +31,7 @@ function PlayState:update(dt)
     table.insert(self.pipePairs, PipePair(y, isPipePairMoving))
 
     self.pipePairSpawnTimer = 0
-    self.pipePairInterval = math.random(1.7, 2.2)
+    self.pipePairInterval = math.random(2, 2.2)
   end
 
   self.bird:update(dt)

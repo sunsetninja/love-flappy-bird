@@ -8,15 +8,15 @@ function PipePair:init(y, isMoving)
   self.y = y
   self.isMoving = isMoving
   self.isMovingUp = math.random() > 0.5
-  self.isMovingUp = false
+  self.isMovingUp = true
 
   self.pipes = {
     ['upper'] = Pipe('top', self.y),
     ['lower'] = Pipe('bottom', self.y + pipeHeight + pipePairGapHeight)
   }
 
-  topPoint = -pipeHeight + 40
-  bottomPoint = gameHeight - (pipePairGapHeight + 40) - pipeHeight
+  self.topPoint = math.max(self.y - 5, -pipeHeight + 40)
+  self.bottomPoint = math.min(self.y + 5, gameHeight - (pipePairGapHeight + 40) - pipeHeight)
 
   self.remove = false
   self.scored = false
@@ -33,18 +33,18 @@ function PipePair:update(dt)
         local addingYOffset = self.isMovingUp and -10 or 10
 
         local nextY = math.max(
-          topPoint, 
+          self.topPoint, 
           math.min(
             self.y + addingYOffset * dt,
-            bottomPoint
+            self.bottomPoint
           )
         )
 
-        if (nextY <= topPoint) then
+        if (nextY <= self.topPoint) then
           self.isMovingUp = false
         end
 
-        if (nextY >= bottomPoint) then
+        if (nextY >= self.bottomPoint) then
           self.isMovingUp = true
         end
 
